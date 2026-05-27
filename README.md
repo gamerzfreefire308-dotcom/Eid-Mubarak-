@@ -1,5 +1,3 @@
-# Eid-Mubarak-
-Eid Wishes For Special Friend 
 <!DOCTYPE html>
 <html>
 <head>
