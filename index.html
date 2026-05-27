@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Eid Surprise 🌙</title>
+  <title>Eid Mubarak 🌙</title>
 
   <style>
     body{
@@ -25,12 +25,17 @@
       display:flex;
       justify-content:center;
       align-items:center;
-      cursor:pointer;
+      flex-direction:column;
       z-index:3;
     }
 
-    #screen h2{
-      color:gold;
+    #screen button{
+      padding:15px 25px;
+      font-size:18px;
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+      background:gold;
     }
 
     .box{
@@ -48,7 +53,6 @@
       margin-top:20px;
     }
 
-    /* stars */
     .star{
       position:absolute;
       width:3px;
@@ -63,7 +67,6 @@
       100%{opacity:1;}
     }
 
-    /* hearts */
     .heart{
       position:absolute;
       font-size:20px;
@@ -80,18 +83,18 @@
 
 <body>
 
-<!-- 🎁 START SCREEN -->
-<div id="screen" onclick="start()">
-  <h2>🎁 Click to open Eid surprise</h2>
+<!-- 🎁 START -->
+<div id="screen">
+  <button onclick="start()">🎁 Click to open Eid surprise</button>
 </div>
 
-<!-- 🌙 MAIN CONTENT -->
+<!-- 🌙 MAIN -->
 <div class="box" id="box">
   <h1>🌙 Eid Mubarak</h1>
   <p id="msg"></p>
 </div>
 
-<!-- 🎵 MUSIC (Option 2 - calm ambient) -->
+<!-- 🎵 MUSIC -->
 <audio id="music" loop>
   <source src="https://cdn.pixabay.com/download/audio/2021/09/16/audio_c8c8a0f4a0.mp3" type="audio/mpeg">
 </audio>
@@ -99,21 +102,27 @@
 <script>
 
 function start(){
+
   document.getElementById("screen").style.display="none";
   document.getElementById("box").style.display="block";
 
+  // 🎵 MUSIC FIX (guaranteed play)
   let music = document.getElementById("music");
+  music.volume = 0.5;
 
-  music.play().catch(()=>{
-    document.body.addEventListener("click", ()=>music.play(), {once:true});
-  });
+  let playPromise = music.play();
+  if(playPromise !== undefined){
+    playPromise.catch(()=>{
+      document.body.addEventListener("click", ()=>music.play(), {once:true});
+    });
+  }
 
   typing();
   stars();
   hearts();
 }
 
-/* typing effect */
+/* typing */
 let text = "Eid Mubarak 🌙✨ Tum naraz ho sakti ho... lekin meri dua hamesha tumhare sath hai 💖";
 let i = 0;
 
