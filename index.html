@@ -25,22 +25,20 @@
       display:flex;
       justify-content:center;
       align-items:center;
-      flex-direction:column;
       z-index:3;
     }
 
     #screen button{
       padding:15px 25px;
       font-size:18px;
+      background:gold;
       border:none;
       border-radius:10px;
       cursor:pointer;
-      background:gold;
     }
 
     .box{
       display:none;
-      z-index:2;
     }
 
     h1{
@@ -53,20 +51,6 @@
       margin-top:20px;
     }
 
-    .star{
-      position:absolute;
-      width:3px;
-      height:3px;
-      background:white;
-      border-radius:50%;
-      animation:blink 2s infinite;
-    }
-
-    @keyframes blink{
-      0%{opacity:0.2;}
-      100%{opacity:1;}
-    }
-
     .heart{
       position:absolute;
       font-size:20px;
@@ -76,6 +60,14 @@
     @keyframes floatUp{
       0%{transform:translateY(100vh); opacity:1;}
       100%{transform:translateY(-10vh); opacity:0;}
+    }
+
+    .star{
+      position:absolute;
+      width:3px;
+      height:3px;
+      background:white;
+      border-radius:50%;
     }
 
   </style>
@@ -94,7 +86,7 @@
   <p id="msg"></p>
 </div>
 
-<!-- 🎵 MUSIC -->
+<!-- 🎵 MUSIC (FIXED) -->
 <audio id="music" loop>
   <source src="https://cdn.pixabay.com/download/audio/2021/09/16/audio_c8c8a0f4a0.mp3" type="audio/mpeg">
 </audio>
@@ -102,24 +94,17 @@
 <script>
 
 function start(){
-
   document.getElementById("screen").style.display="none";
   document.getElementById("box").style.display="block";
 
-  // 🎵 MUSIC FIX (guaranteed play)
+  // 🎵 MUSIC PLAY FIX
   let music = document.getElementById("music");
   music.volume = 0.5;
-
-  let playPromise = music.play();
-  if(playPromise !== undefined){
-    playPromise.catch(()=>{
-      document.body.addEventListener("click", ()=>music.play(), {once:true});
-    });
-  }
+  music.play();
 
   typing();
-  stars();
   hearts();
+  stars();
 }
 
 /* typing */
@@ -134,17 +119,6 @@ function typing(){
   }
 }
 
-/* stars */
-function stars(){
-  for(let i=0;i<80;i++){
-    let s=document.createElement("div");
-    s.className="star";
-    s.style.top=Math.random()*100+"vh";
-    s.style.left=Math.random()*100+"vw";
-    document.body.appendChild(s);
-  }
-}
-
 /* hearts */
 function hearts(){
   setInterval(()=>{
@@ -156,6 +130,17 @@ function hearts(){
 
     setTimeout(()=>h.remove(),5000);
   },300);
+}
+
+/* stars */
+function stars(){
+  for(let i=0;i<80;i++){
+    let s=document.createElement("div");
+    s.className="star";
+    s.style.top=Math.random()*100+"vh";
+    s.style.left=Math.random()*100+"vw";
+    document.body.appendChild(s);
+  }
 }
 
 </script>
