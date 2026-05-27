@@ -25,7 +25,7 @@
       display:flex;
       justify-content:center;
       align-items:center;
-      z-index:3;
+      z-index:5;
     }
 
     #screen button{
@@ -37,19 +37,11 @@
       cursor:pointer;
     }
 
-    .box{
-      display:none;
-    }
+    .box{ display:none; }
 
-    h1{
-      font-size:55px;
-      color:gold;
-    }
+    h1{ color:gold; font-size:55px; }
 
-    p{
-      font-size:20px;
-      margin-top:20px;
-    }
+    p{ font-size:20px; margin-top:20px; }
 
     .heart{
       position:absolute;
@@ -69,24 +61,21 @@
       background:white;
       border-radius:50%;
     }
-
   </style>
 </head>
 
 <body>
 
-<!-- 🎁 START -->
 <div id="screen">
   <button onclick="start()">🎁 Click to open Eid surprise</button>
 </div>
 
-<!-- 🌙 MAIN -->
 <div class="box" id="box">
   <h1>🌙 Eid Mubarak</h1>
   <p id="msg"></p>
 </div>
 
-<!-- 🎵 MUSIC (FIXED) -->
+<!-- 🎵 AUDIO -->
 <audio id="music" loop>
   <source src="https://cdn.pixabay.com/download/audio/2021/09/16/audio_c8c8a0f4a0.mp3" type="audio/mpeg">
 </audio>
@@ -94,13 +83,20 @@
 <script>
 
 function start(){
+
   document.getElementById("screen").style.display="none";
   document.getElementById("box").style.display="block";
 
-  // 🎵 MUSIC PLAY FIX
   let music = document.getElementById("music");
-  music.volume = 0.5;
-  music.play();
+
+  // 🔥 IMPORTANT FIX (unlock audio)
+  music.load();
+  music.play().then(()=>{
+    console.log("Music playing");
+  }).catch(()=>{
+    // backup click unlock
+    document.body.addEventListener("click", ()=>music.play(), {once:true});
+  });
 
   typing();
   hearts();
@@ -127,7 +123,6 @@ function hearts(){
     h.innerHTML="💖";
     h.style.left=Math.random()*100+"vw";
     document.body.appendChild(h);
-
     setTimeout(()=>h.remove(),5000);
   },300);
 }
